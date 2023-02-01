@@ -31,7 +31,7 @@ const Home = () => {
 		dispatch(setCurrentPage(number));
 	};
 
-	const fetchPizzas = () => {
+	useEffect(() => {
 		async function fetchData() {
 			setIsLoading(true);
 
@@ -39,9 +39,17 @@ const Home = () => {
 			const sortBy = sort.sortProperty.replace('-', '');
 			const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 			const search = searchValue ? `&search=${searchValue}` : '';
+			axios
+				.get(
+					`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
+				)
+				.then((res) => {
+					setItems(res.data);
+					setIsLoading(false);
+				});
 		}
 		fetchData();
-	};
+	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	useEffect(() => {
 		if (isMounted.current) {
@@ -73,14 +81,14 @@ const Home = () => {
 		}
 	}, []);
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
+	// useEffect(() => {
+	// 	window.scrollTo(0, 0);
 
-		if (!isSearch.current) {
-			fetchPizzas();
-		}
-		isSearch.current = false;
-	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
+	// 	if (!isSearch.current) {
+	// 		fetchPizzas();
+	// 	}
+	// 	isSearch.current = false;
+	// }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	const pizzas = items.map((obj) => (
 		<PizzaBlock
