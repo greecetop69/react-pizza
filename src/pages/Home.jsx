@@ -3,7 +3,6 @@ import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-//hi
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
@@ -31,7 +30,7 @@ const Home = () => {
 		dispatch(setCurrentPage(number));
 	};
 
-	useEffect(() => {
+	const fetchPizzas = () => {
 		async function fetchData() {
 			setIsLoading(true);
 
@@ -49,7 +48,7 @@ const Home = () => {
 				});
 		}
 		fetchData();
-	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
+	};
 
 	useEffect(() => {
 		if (isMounted.current) {
@@ -81,14 +80,14 @@ const Home = () => {
 		}
 	}, []);
 
-	// useEffect(() => {
-	// 	window.scrollTo(0, 0);
+	useEffect(() => {
+		window.scrollTo(0, 0);
 
-	// 	if (!isSearch.current) {
-	// 		fetchPizzas();
-	// 	}
-	// 	isSearch.current = false;
-	// }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+		if (!isSearch.current) {
+			fetchPizzas();
+		}
+		isSearch.current = false;
+	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	const pizzas = items.map((obj) => (
 		<PizzaBlock
