@@ -44,6 +44,5 @@ const cartSlice = createSlice({
         },
     }
 })
-console.log("sfa")
 export const { addItem, removeItem, minusItem, clearItems } = cartSlice.actions
 export default cartSlice.reducer

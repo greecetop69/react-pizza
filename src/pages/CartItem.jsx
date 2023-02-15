@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, removeItem, minusItem } from '../redux/slices/cartSlice';
 
-const CartItem = ({ id, title, price, imageUrl, type, count }) => {
+const CartItem = ({ id, title, price, imageUrl, type, size, count }) => {
 	const dispatch = useDispatch();
 	const onClickPlus = () => {
 		dispatch(addItem({ id }));
@@ -13,6 +13,7 @@ const CartItem = ({ id, title, price, imageUrl, type, count }) => {
 	const onClickRemove = () => {
 		if (window.confirm('Ты действительно хочешь удалить пиццу?')) dispatch(removeItem(id));
 	};
+
 	return (
 		<div className='cart__item'>
 			<div className='cart__item-img'>
@@ -20,7 +21,9 @@ const CartItem = ({ id, title, price, imageUrl, type, count }) => {
 			</div>
 			<div className='cart__item-info'>
 				<h3> {title}</h3>
-				<p>{type}, 26 см.</p>
+				<p>
+					{type}, {size} см.
+				</p>
 			</div>
 			<div className='cart__item-count'>
 				<div
@@ -64,7 +67,7 @@ const CartItem = ({ id, title, price, imageUrl, type, count }) => {
 				</div>
 			</div>
 			<div className='cart__item-price'>
-				<b>{price * count} ₽</b>
+				<b> {price * count} ₽</b>
 			</div>
 			<div className='cart__item-remove'>
 				<div onClick={onClickRemove} className='button button--outline button--circle'>
