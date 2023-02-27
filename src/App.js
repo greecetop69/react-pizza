@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Cart from './pages/Cart'
 
+import Login from './pages/Login';
 import './scss/app.scss'
 
 export const SearchContext = createContext('')
@@ -24,6 +25,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </SearchContext.Provider>

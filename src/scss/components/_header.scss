@@ -8,13 +8,23 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
+		.header__cart {
+			display: flex;
+			margin-top: 30px;
+		}
 		@media (max-width: 645px) {
 			flex-direction: column;
 
 			.header__cart {
 				margin-top: 30px;
 			}
+		}
+		.header__login {
+			margin-top: 10px;
+			margin-right: 20px;
+		}
+		.login__svg {
+			// padding-top: 10px;
 		}
 	}
 

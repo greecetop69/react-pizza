@@ -10,6 +10,7 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
+import LoginForm from '../components/LoginForm';
 
 const Home = () => {
 	const navigate = useNavigate();

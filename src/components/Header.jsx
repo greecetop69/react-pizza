@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 
 import Search from './Search';
 import logoSvg from '../assets/img/pizza-logo.svg';
+import loginSvg from '../assets/img/login.svg';
 import { useSelector } from 'react-redux';
+import LoginForm from './LoginForm';
 
 function Header() {
 	const { items, totalPrice } = useSelector((state) => state.cart);
@@ -21,6 +23,13 @@ function Header() {
 				</Link>
 				<Search />
 				<div className='header__cart'>
+					<div className='header__login'>
+						<LoginForm />
+						{/* <Link to='/login'>
+							<img width='38' src={loginSvg} alt='Login logo' />
+						</Link> */}
+					</div>
+
 					<Link to='/cart' className='button button--cart'>
 						<span>{totalPrice} ₽</span>
 						<div className='button__delimiter'></div>
