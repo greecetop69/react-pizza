@@ -11,16 +11,18 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 import LoginForm from '../components/LoginForm';
+import { setItems } from '../redux/slices/pizzaSlice';
 
 const Home = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const isSearch = useRef(false);
 	const isMounted = useRef(false); //Изначальнро первого рендера НЕТ
+
 	const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+	const items = useSelector((state) => state.pizza.items);
 
 	const { searchValue } = useContext(SearchContext);
-	const [items, setItems] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const onChangeCategory = (id) => {
@@ -39,14 +41,18 @@ const Home = () => {
 			const sortBy = sort.sortProperty.replace('-', '');
 			const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 			const search = searchValue ? `&search=${searchValue}` : '';
-			axios
-				.get(
+
+			try {
+				const { data } = await axios.get(
 					`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
-				)
-				.then((res) => {
-					setItems(res.data);
-					setIsLoading(false);
-				});
+				);
+				dispatch(setItems(data));
+			} catch (error) {
+				console.log('ERROr', error);
+				alert('ошибка при получении пицц');
+			} finally {
+				setIsLoading(false);
+			}
 		}
 		fetchData();
 	};
