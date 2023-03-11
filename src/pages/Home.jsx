@@ -11,7 +11,8 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 import LoginForm from '../components/LoginForm';
-import { setItems } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, setItems } from '../redux/slices/pizzaSlice';
+import { get } from 'lodash';
 
 const Home = () => {
 	const navigate = useNavigate();
@@ -33,28 +34,35 @@ const Home = () => {
 		dispatch(setCurrentPage(number));
 	};
 
-	const fetchPizzas = () => {
-		async function fetchData() {
-			setIsLoading(true);
+	const getPizzas = async () => {
+		setIsLoading(true);
 
-			const category = categoryId > 0 ? `category=${categoryId}` : '';
-			const sortBy = sort.sortProperty.replace('-', '');
-			const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
-			const search = searchValue ? `&search=${searchValue}` : '';
+		const category = categoryId > 0 ? `category=${categoryId}` : '';
+		const sortBy = sort.sortProperty.replace('-', '');
+		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+		const search = searchValue ? `&search=${searchValue}` : '';
 
-			try {
-				const { data } = await axios.get(
-					`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
-				);
-				dispatch(setItems(data));
-			} catch (error) {
-				console.log('ERROr', error);
-				alert('ошибка при получении пицц');
-			} finally {
-				setIsLoading(false);
-			}
+		try {
+			const { data } = await axios.get(
+				`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
+			);
+			dispatch(
+				// fetchPizzas({
+				// 	category,
+				// 	sortBy,
+				// 	order,
+				// 	search,
+				// 	currentPage,
+				// 	searchValue,
+				// }),
+				setItems(data),
+			);
+		} catch (error) {
+			console.log('ERROr', error);
+			alert('ошибка при получении пицц');
+		} finally {
+			setIsLoading(false);
 		}
-		fetchData();
 	};
 
 	useEffect(() => {
@@ -91,9 +99,12 @@ const Home = () => {
 		window.scrollTo(0, 0);
 
 		if (!isSearch.current) {
-			fetchPizzas();
+			getPizzas();
 		}
 		isSearch.current = false;
+		// if (window.location.search) {
+		// getPizzas();
+		// }
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	const pizzas = items.map((obj) => (
