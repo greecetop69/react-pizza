@@ -2,7 +2,7 @@ import { Dispatch } from "@reduxjs/toolkit"
 // import api from "../../api"
 import api from '../../api'
 import { ILoginRequest, ILoginResponse } from "../../api/auth/types"
-import { loginStart, loginSucess, loginFailure, logoutSuccess,loadProfileStart, loadProfileFailure, loadProfileSucess } from "./authReducer"
+import { loginStart, loginSucess, loginFailure   } from "./authReducer"
 // import { history } from '../../utils/history'
 // import { store } from ".."
 import { AxiosPromise } from "axios"

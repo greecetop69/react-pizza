@@ -1,10 +1,9 @@
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useState } from 'react';
-// import { useAppDispatch } from '../../redux/store';
 
+import { useAppDispatch } from '../../redux/store';
 import loginSvg from '../../assets/img/login.svg';
 import { loginUser } from '../../redux/auth/actionCreators';
-import { useAppDispatch } from '../../redux/store';
 
 const LoginForm = () => {
 	const [login, setLogin] = useState('');
@@ -13,7 +12,8 @@ const LoginForm = () => {
 	const dispatch = useAppDispatch();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(loginUser({ login, password }));
+    
+		// dispatch(loginUser({ login, password }));
 	};
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showModal = () => {
