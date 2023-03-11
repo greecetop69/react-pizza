@@ -1,11 +1,20 @@
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useState } from 'react';
+// import { useAppDispatch } from '../../redux/store';
+
 import loginSvg from '../../assets/img/login.svg';
+import { loginUser } from '../../redux/auth/actionCreators';
+import { useAppDispatch } from '../../redux/store';
 
 const LoginForm = () => {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
+	const dispatch = useAppDispatch();
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(loginUser({ login, password }));
+	};
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -53,9 +62,11 @@ const LoginForm = () => {
 					onFinishFailed={onFinishFailed}
 					autoComplete='off'>
 					<Form.Item
+						onSubmit={handleSubmit}
 						label='Username'
 						name='username'
 						value={login}
+						onChange={(e) => setLogin(e.target.value)}
 						rules={[
 							{
 								required: true,
@@ -69,6 +80,7 @@ const LoginForm = () => {
 						label='Password'
 						name='password'
 						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 						rules={[
 							{
 								required: true,
