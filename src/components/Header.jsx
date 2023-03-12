@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
-
 import Search from './Search';
 import logoSvg from '../assets/img/pizza-logo.svg';
 import { useSelector } from 'react-redux';
 import LoginForm from './LoginForm';
 import { CartIndicator } from '../components/cart/cartIndicator';
+import { logout, selectIsAuth } from '../redux/slices/authSlice';
+import { useAppDispatch } from '../redux/store';
 
 function Header() {
+	const dispatch = useAppDispatch();
+
 	const { items, totalPrice } = useSelector((state) => state.cart);
 	const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+	const isAuth = useSelector(selectIsAuth);
 	return (
 		<div className='header'>
 			<div className='container'>
@@ -23,13 +27,18 @@ function Header() {
 				</Link>
 				<Search />
 				<div className='header__cart'>
-					<div className='header__login'>
-						<LoginForm />
-					</div>
-
-					<Link to='/cart' className='button button--cart'>
-            <CartIndicator count={totalCount} price={totalPrice} />
-					</Link>
+					{isAuth ? (
+						<>
+							<button onClick={() => dispatch(logout())}>выход</button>
+							<Link to='/cart' className='button button--cart'>
+								<CartIndicator count={totalCount} price={totalPrice} />
+							</Link>
+						</>
+					) : (
+						<div className='header__login'>
+							<LoginForm />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

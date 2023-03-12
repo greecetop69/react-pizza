@@ -4,16 +4,21 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../redux/store';
 import loginSvg from '../../assets/img/login.svg';
 import { loginUser } from '../../redux/auth/actionCreators';
+import { enqueueSnackbar, useSnackbar } from 'notistack';
+import { fetchAuth, selectIsAuth } from '../../redux/slices/authSlice';
+import { useSelector } from 'react-redux';
 
 const LoginForm = () => {
-	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
+	const [username, setUsername] = useState('kminchelle');
+	const [password, setPassword] = useState('0lelplR');
+	const [isError, setIsError] = useState(false);
+	const isAuth = useSelector(selectIsAuth);
+	// const dispatch = useDispatch()
 
 	const dispatch = useAppDispatch();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-    
-		// dispatch(loginUser({ login, password }));
+		dispatch(loginUser({ username, password }));
 	};
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showModal = () => {
@@ -32,6 +37,21 @@ const LoginForm = () => {
 		console.log('Failed:', errorInfo);
 	};
 
+	async function authentication(username, password) {
+		const data = await dispatch(fetchAuth({ username, password }));
+		if (data.payload) {
+			enqueueSnackbar('Successfully authorized!', {
+				autoHideDuration: 1000,
+				variant: 'success',
+			});
+		} else {
+			enqueueSnackbar('Логин или Пароль неверные', {
+				autoHideDuration: 1000,
+				variant: 'error',
+			});
+		}
+	}
+
 	return (
 		<>
 			<Button type='primary' onClick={showModal} style={{ background: '#FE5F1E', height: '39px' }}>
@@ -39,7 +59,7 @@ const LoginForm = () => {
 			</Button>
 
 			<Modal
-				title='Basic Modal'
+				title='Авторизация'
 				open={isModalOpen}
 				onOk={handleOk}
 				onCancel={handleCancel}
@@ -63,10 +83,10 @@ const LoginForm = () => {
 					autoComplete='off'>
 					<Form.Item
 						onSubmit={handleSubmit}
-						label='Username'
+						label='kminchelle'
 						name='username'
-						value={login}
-						onChange={(e) => setLogin(e.target.value)}
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
 						rules={[
 							{
 								required: true,
@@ -77,7 +97,7 @@ const LoginForm = () => {
 					</Form.Item>
 
 					<Form.Item
-						label='Password'
+						label='0lelplR'
 						name='password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +109,7 @@ const LoginForm = () => {
 						]}>
 						<Input.Password />
 					</Form.Item>
-
+					{/* {isError && <>Логин или пароль указаны неверно!</>} */}
 					<Form.Item
 						name='remember'
 						valuePropName='checked'
@@ -97,7 +117,7 @@ const LoginForm = () => {
 							offset: 8,
 							span: 16,
 						}}>
-						<Checkbox>Remember me</Checkbox>
+						<Checkbox>Запомнить меня</Checkbox>
 					</Form.Item>
 
 					<Form.Item
@@ -105,8 +125,11 @@ const LoginForm = () => {
 							offset: 8,
 							span: 16,
 						}}>
-						<Button type='primary' htmlType='submit'>
-							Submit
+						<Button
+							type='primary'
+							htmlType='submit'
+							onClick={() => authentication(username, password)}>
+							Войти
 						</Button>
 					</Form.Item>
 				</Form>
