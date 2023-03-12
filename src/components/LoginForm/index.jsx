@@ -38,18 +38,27 @@ const LoginForm = () => {
 	};
 
 	async function authentication(username, password) {
-		const data = await dispatch(fetchAuth({ username, password }));
-		if (data.payload) {
-			enqueueSnackbar('Successfully authorized!', {
-				autoHideDuration: 1000,
-				variant: 'success',
-			});
-		} else {
-			enqueueSnackbar('Логин или Пароль неверные', {
-				autoHideDuration: 1000,
-				variant: 'error',
-			});
-		}
+
+    // Я посмотрел документацию там так данные не забираебтся это хуйня как я понял
+    // лучше создать отдельный dispatch  который тебе выдаст данные если fullfilled or rejected
+    // и не нужна будет проверка на if data.payload 
+    // или вот так как я сделал
+    // проверка была лишняя думаю это писал макс
+    // И я могу попасть на страницу /cart если не авторизован ) 
+    // попытайся пофиксить это
+		await dispatch(fetchAuth({ username, password })).unwrap()
+      .then(() => {
+        enqueueSnackbar('Successfully authorized!', {
+          autoHideDuration: 1000,
+          variant: 'success',
+        });
+      })
+      .catch(() => {
+        enqueueSnackbar('Логин или Пароль неверные', {
+          autoHideDuration: 1000,
+          variant: 'error',
+        });
+      })
 	}
 
 	return (

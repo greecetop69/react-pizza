@@ -9,6 +9,8 @@ export const fetchAuth = createAsyncThunk("fetchAuth", async (params) => {
 })
 
 const initialState = {
+// Тут к примеру можно поставить поле isAuth: false и от него чекать зареган или нет.
+// может в будущем понадобится а то по токенку проверять такое себе думаю
     token: localStorage.getItem('token'),
     username: localStorage.getItem('username')
 }
