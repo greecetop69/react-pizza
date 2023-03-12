@@ -38,27 +38,22 @@ const LoginForm = () => {
 	};
 
 	async function authentication(username, password) {
-
-    // Я посмотрел документацию там так данные не забираебтся это хуйня как я понял
-    // лучше создать отдельный dispatch  который тебе выдаст данные если fullfilled or rejected
-    // и не нужна будет проверка на if data.payload 
-    // или вот так как я сделал
-    // проверка была лишняя думаю это писал макс
-    // И я могу попасть на страницу /cart если не авторизован ) 
-    // попытайся пофиксить это
-		await dispatch(fetchAuth({ username, password })).unwrap()
-      .then(() => {
-        enqueueSnackbar('Successfully authorized!', {
-          autoHideDuration: 1000,
-          variant: 'success',
-        });
-      })
-      .catch(() => {
-        enqueueSnackbar('Логин или Пароль неверные', {
-          autoHideDuration: 1000,
-          variant: 'error',
-        });
-      })
+		//если .then сработает, то вернулся положительный результат,
+		// unwrap вернет те данные, что возвращает api (token, username)
+		await dispatch(fetchAuth({ username, password }))
+			.unwrap()
+			.then(() => {
+				enqueueSnackbar('Successfully authorized!', {
+					autoHideDuration: 1000,
+					variant: 'success',
+				});
+			})
+			.catch(() => {
+				enqueueSnackbar('Логин или Пароль неверные', {
+					autoHideDuration: 1000,
+					variant: 'error',
+				});
+			});
 	}
 
 	return (
@@ -74,6 +69,11 @@ const LoginForm = () => {
 				onCancel={handleCancel}
 				footer={null}>
 				<Form
+					initialValues={{
+						username: 'kminchelle',
+						password: '0lelplR',
+						remember: true,
+					}}
 					name='basic'
 					labelCol={{
 						span: 8,
@@ -84,15 +84,12 @@ const LoginForm = () => {
 					style={{
 						maxWidth: 600,
 					}}
-					initialValues={{
-						remember: true,
-					}}
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
 					autoComplete='off'>
 					<Form.Item
 						onSubmit={handleSubmit}
-						label='kminchelle'
+						label='Username'
 						name='username'
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
@@ -106,7 +103,7 @@ const LoginForm = () => {
 					</Form.Item>
 
 					<Form.Item
-						label='0lelplR'
+						label='Password'
 						name='password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}

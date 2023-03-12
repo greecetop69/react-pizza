@@ -9,11 +9,14 @@ import Cart from './pages/Cart'
 
 import Login from './pages/Login';
 import './scss/app.scss'
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from './redux/slices/authSlice';
 
 export const SearchContext = createContext('')
 
 function App() {
   const [searchValue, setSearchValue] = useState('')
+  const isAuth = useSelector(selectIsAuth);
 
 
   return (
@@ -22,8 +25,8 @@ function App() {
         <Header />
         <div className="content">
           <Routes>
+            {isAuth && <Route path='/cart' element={<Cart />} />}
             <Route path='/' element={<Home />} />
-            <Route path='/cart' element={<Cart />} />
             <Route path='*' element={<NotFound />} />
             <Route path='/login' element={<Login />} />
           </Routes>
