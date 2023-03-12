@@ -28,6 +28,7 @@ const Home = () => {
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
+    dispatch(setCurrentPage(1));
 	};
 
 	const onChangePage = (number) => {
@@ -47,14 +48,6 @@ const Home = () => {
 				`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
 			);
 			dispatch(
-				// fetchPizzas({
-				// 	category,
-				// 	sortBy,
-				// 	order,
-				// 	search,
-				// 	currentPage,
-				// 	searchValue,
-				// }),
 				setItems(data),
 			);
 		} catch (error) {

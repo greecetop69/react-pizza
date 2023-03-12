@@ -30,6 +30,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			<div className='pizza-block'>
 				<img className='pizza-block__image' src={imageUrl} alt='Pizza' />
 				<h4 className='pizza-block__title'>{title}</h4>
+        {/* ================== Вынеси этот блок отдельно и придумай название*/}
 				<div className='pizza-block__selector'>
 					<ul>
 						{types.map((typeId) => (
@@ -52,6 +53,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 						))}
 					</ul>
 				</div>
+        {/* ======================== */}
 				<div className='pizza-block__bottom'>
 					<div className='pizza-block__price'>от {price} ₽</div>
 					<button onClick={onClickAdd} className='button button--outline button--add'>

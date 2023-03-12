@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function Categories({ value, onChangeCategory }) {
 	const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
@@ -6,8 +6,11 @@ function Categories({ value, onChangeCategory }) {
 	return (
 		<div className='categories'>
 			<ul>
+        {/* Тут лучше не использвоть i как key, т.к у тебя элементы массива все разные и уникальные и можно для 
+          key взять categoryName
+        */}
 				{categories.map((categoryName, i) => (
-					<li key={i} onClick={() => onChangeCategory(i)} className={value === i ? 'active' : ''}>
+					<li key={categoryName} onClick={() => onChangeCategory(i)} className={value === i ? 'active' : ''}>
 						{categoryName}
 					</li>
 				))}
