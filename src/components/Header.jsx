@@ -6,6 +6,9 @@ import LoginForm from './LoginForm';
 import { CartIndicator } from '../components/cart/cartIndicator';
 import { logout, selectIsAuth } from '../redux/slices/authSlice';
 import { useAppDispatch } from '../redux/store';
+import { Button } from 'antd';
+import { useState } from 'react';
+import logoutSvg from '../assets/img/logout.svg';
 
 function Header() {
 	const dispatch = useAppDispatch();
@@ -29,7 +32,12 @@ function Header() {
 				<div className='header__cart'>
 					{isAuth ? (
 						<>
-							<button onClick={() => dispatch(logout())}>выход</button>
+							<Button
+								type='primary'
+								onClick={() => dispatch(logout())}
+								style={{ background: '#fe5f1e', height: '39px' }}>
+								<img width='30' src={logoutSvg} alt='Login logo' className='login__svg' />
+							</Button>
 							<Link to='/cart' className='button button--cart'>
 								<CartIndicator count={totalCount} price={totalPrice} />
 							</Link>

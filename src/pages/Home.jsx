@@ -10,9 +10,7 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
-import LoginForm from '../components/LoginForm';
-import { fetchPizzas, setItems } from '../redux/slices/pizzaSlice';
-import { get } from 'lodash';
+import { setItems } from '../redux/slices/pizzaSlice';
 
 const Home = () => {
 	const navigate = useNavigate();
@@ -28,7 +26,7 @@ const Home = () => {
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
-    dispatch(setCurrentPage(1));
+		dispatch(setCurrentPage(1));
 	};
 
 	const onChangePage = (number) => {
@@ -47,9 +45,7 @@ const Home = () => {
 			const { data } = await axios.get(
 				`https://639262efac688bbe4c62c42b.mockapi.io/items/?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
 			);
-			dispatch(
-				setItems(data),
-			);
+			dispatch(setItems(data));
 		} catch (error) {
 			console.log('ERROr', error);
 			alert('ошибка при получении пицц');

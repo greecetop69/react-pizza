@@ -2,23 +2,18 @@ import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useState } from 'react';
 
 import { useAppDispatch } from '../../redux/store';
-import loginSvg from '../../assets/img/login.svg';
-import { loginUser } from '../../redux/auth/actionCreators';
-import { enqueueSnackbar, useSnackbar } from 'notistack';
-import { fetchAuth, selectIsAuth } from '../../redux/slices/authSlice';
-import { useSelector } from 'react-redux';
+import loginSvg from '../../assets/img/white_login.svg';
+import { enqueueSnackbar } from 'notistack';
+import { fetchAuth } from '../../redux/slices/authSlice';
 
 const LoginForm = () => {
 	const [username, setUsername] = useState('kminchelle');
 	const [password, setPassword] = useState('0lelplR');
-	const [isError, setIsError] = useState(false);
-	const isAuth = useSelector(selectIsAuth);
-	// const dispatch = useDispatch()
 
 	const dispatch = useAppDispatch();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(loginUser({ username, password }));
+		dispatch({ username, password });
 	};
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showModal = () => {
@@ -58,7 +53,7 @@ const LoginForm = () => {
 
 	return (
 		<>
-			<Button type='primary' onClick={showModal} style={{ background: '#FE5F1E', height: '39px' }}>
+			<Button type='primary' onClick={showModal} style={{ background: '#fe5f1e', height: '39px' }}>
 				<img width='30' src={loginSvg} alt='Login logo' className='login__svg' />
 			</Button>
 
@@ -115,7 +110,7 @@ const LoginForm = () => {
 						]}>
 						<Input.Password />
 					</Form.Item>
-					{/* {isError && <>Логин или пароль указаны неверно!</>} */}
+
 					<Form.Item
 						name='remember'
 						valuePropName='checked'

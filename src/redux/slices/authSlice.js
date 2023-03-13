@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
 
 
 export const fetchAuth = createAsyncThunk("fetchAuth", async (params) => {
@@ -9,8 +8,8 @@ export const fetchAuth = createAsyncThunk("fetchAuth", async (params) => {
 })
 
 const initialState = {
-// Тут к примеру можно поставить поле isAuth: false и от него чекать зареган или нет.
-// может в будущем понадобится а то по токенку проверять такое себе думаю
+    // Тут к примеру можно поставить поле isAuth: false и от него чекать зареган или нет.
+    // может в будущем понадобится а то по токенку проверять такое себе думаю
     token: localStorage.getItem('token'),
     username: localStorage.getItem('username')
 }
@@ -19,16 +18,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // login(state, action) {
-        //     localStorage.setItem("token", response.data.token);
-        //     localStorage.setItem("username", response.data.username);
 
-        //     enqueueSnackbar('Successfully authorized!', {
-        //         autoHideDuration: 1000,
-        //         variant: 'success',
-        //     });
-
-        // },
         logout(state) {
             state.token = null
             state.username = null
