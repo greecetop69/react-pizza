@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Cart from './pages/Cart'
 
-import Login from './pages/Login';
 import './scss/app.scss'
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from './redux/slices/authSlice';
@@ -28,7 +27,6 @@ function App() {
             {isAuth && <Route path='/cart' element={<Cart />} />}
             <Route path='/' element={<Home />} />
             <Route path='*' element={<NotFound />} />
-            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </SearchContext.Provider>

@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { SearchContext } from '../../App';
